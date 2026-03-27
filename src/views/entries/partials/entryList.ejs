@@ -1,0 +1,23 @@
+<div class="list-header">
+  <h3>All Entries</h3>
+  <p><%= entries.length %> item<%= entries.length === 1 ? "" : "s" %></p>
+</div>
+<ul class="entry-list">
+  <% if (!entries.length) { %>
+    <li class="entry-card empty-state">No entries yet.</li>
+  <% } %>
+
+  <% entries.forEach((entry) => { %>
+    <li class="entry-card">
+      <div class="entry-card-header">
+        <div>
+          <strong><%= entry.title %></strong>
+          <p class="entry-tag"><%= entry.tag %></p>
+        </div>
+        <span class="status-pill status-<%= entry.status %>"><%= entry.status %></span>
+      </div>
+      <p class="entry-body"><%= entry.body %></p>
+      <p class="entry-meta">id=<%= entry.id %> created=<%= entry.createdAt %></p>
+    </li>
+  <% }) %>
+</ul>

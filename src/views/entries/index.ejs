@@ -1,0 +1,45 @@
+<section class="hero glass-panel">
+  <p class="eyebrow"></p>
+  <h1>Journal App</h1>
+  <p class="hero-copy">
+    Use this starter to implement add a new feature.
+  </p>
+</section>
+
+<% if (pageError) { %>
+  <%- include("partials/error", { message: pageError }) %>
+<% } %>
+
+<section class="workspace-grid">
+  <section class="glass-panel control-panel">
+    <div class="panel-header">
+      <h2>Create Entry</h2>
+      <p>Capture a title, body, and tag. The starter routes already support HTMX updates.</p>
+    </div>
+
+    <form
+      class="entry-form"
+      hx-post="/entries/new"
+      hx-target="#entries-panel"
+      hx-swap="innerHTML"
+      hx-on::after-request="if (event.detail.successful) this.reset()"
+    >
+      <label for="title">Title</label>
+      <input id="title" name="title" required />
+
+      <label for="body">Body</label>
+      <textarea id="body" name="body" rows="5" required></textarea>
+
+      <label for="tag">Tag</label>
+      <input id="tag" name="tag" placeholder="general" />
+
+      <button type="submit">Create Journal Entry</button>
+    </form>
+  </section>
+
+  <section class="glass-panel entries-panel">
+    <section id="entries-panel">
+      <%- include("partials/entryList", { entries }) %>
+    </section>
+  </section>
+</section>
