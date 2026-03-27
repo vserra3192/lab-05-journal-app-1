@@ -83,7 +83,7 @@ class EntryController implements IEntryController {
    async searchEntries(res: Response, q: string): Promise<void> {
     this.logger.info(`Searching entries with query: ${q}`);
 
-    const result = await this.service.search(q);
+    const result = await this.service.searchEntries(q);
 
     // Handle domain errors
     if (!result.ok && this.isEntryError(result.value)) {
