@@ -23,4 +23,5 @@ export interface IEntryRepository {
   add(input: CreateEntryInput): Promise<Result<Entry, EntryError>>;
   getById(id: number): Promise<Result<Entry, EntryError>>;
   getAll(): Promise<Result<Entry[], EntryError>>;
+  search(query: string): Promise<Result<Entry[], EntryError>>;
 }

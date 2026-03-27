@@ -72,6 +72,29 @@ class PrismaEntryRepository implements IEntryRepository {
       return Err(UnexpectedDependencyError("Database read failed while listing entries."));
     }
   }
+    async search(query: string): Promise<Result<Entry[], EntryError>> {
+    const term = String(query ?? "").trim();
+    if (!term) {
+      return Err(ValidationError("Search query must not be empty."));
+    }
+
+    try {
+      const rows = await this.prisma.entry.findMany({
+        where: {
+          content: {
+            contains: term,
+            mode: "insensitive",
+          },
+        },
+        orderBy: { id: "desc" },
+      });
+      return Ok(rows.map(toEntry));
+    } catch {
+      return Err(
+        UnexpectedDependencyError("Database read failed while searching entries."),
+      );
+    }
+  }
 }
 
 export function CreatePrismaEntryRepository(prisma: PrismaClient): IEntryRepository {

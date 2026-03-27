@@ -6,6 +6,7 @@ import { EntryError, InvalidContent, ValidationError } from "../lib/errors.js";
 export interface IEntryService {
   createEntry(input: CreateEntryInput): Promise<Result<Entry, EntryError>>;
   listEntries(): Promise<Result<Entry[], EntryError>>;
+  searchEntries(query: string): Promise<Result<Entry[], EntryError>>;
 }
 
 class EntryService implements IEntryService {
@@ -40,6 +41,15 @@ class EntryService implements IEntryService {
 
   async listEntries(): Promise<Result<Entry[], EntryError>> {
     return this.repository.getAll();
+  }
+
+  async searchEntries(query: string): Promise<Result<Entry[], EntryError>> {
+    const term = String(query ?? "").trim();
+    if (!term) {
+      return Err(ValidationError("Search query must not be empty."));
+    }
+
+    return this.repository.search(term);
   }
 }
 
