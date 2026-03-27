@@ -81,9 +81,9 @@ class PrismaEntryRepository implements IEntryRepository {
     try {
       const rows = await this.prisma.entry.findMany({
         where: {
-          content: {
+          body: {
             contains: term,
-            mode: "insensitive",
+            //mode: "insensitive",
           },
         },
         orderBy: { id: "desc" },

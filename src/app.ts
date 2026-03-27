@@ -73,7 +73,18 @@ class ExpressApp implements IApp {
       this.logger.error(message);
       res.status(500).render("entries/partials/error", { message: "Unexpected server error." });
     });
+
+    this.app.get(
+    "/entries/search",
+    asyncHandler(async (req, res) => {
+      const query = typeof req.query.q === "string" ? req.query.q : "";
+
+      this.logger.info(`GET /entries/search?q=${query}`);
+      await this.controller.searchEntries(res, query);
+    }),
+  );
   }
+  
 
   getExpressApp(): express.Express {
     return this.app;
