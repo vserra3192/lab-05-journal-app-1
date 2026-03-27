@@ -7,7 +7,7 @@ import { EntryError } from "../lib/errors.js";
 export interface IEntryController {
   showEntries(res: Response): Promise<void>;
   createFromForm(res: Response, title: string, body: string, tag: string): Promise<void>;
-  search(res: Response, q: string): Promise<void>;
+  searchEntries(res: Response, q: string): Promise<void>;
 }
 
 class EntryController implements IEntryController {
@@ -80,7 +80,7 @@ class EntryController implements IEntryController {
     await this.renderEntryList(res);
   }
 
-   async search(res: Response, q: string): Promise<void> {
+   async searchEntries(res: Response, q: string): Promise<void> {
     this.logger.info(`Searching entries with query: ${q}`);
 
     const result = await this.service.search(q);
