@@ -10,6 +10,25 @@
   <%- include("partials/error", { message: pageError }) %>
 <% } %>
 
+<section class="glass-panel">
+  <h2>Search Entries</h2>
+
+  <input
+    type="text"
+    name="query"
+    placeholder="Search journal entries..."
+    hx-get="/entries/search"
+    hx-trigger="keyup changed delay:500ms"
+    hx-target="#journal-list"
+    class="search-input"
+  />
+
+  <!-- Search Results -->
+  <div id="journal-list">
+    <!-- HTMX search results will load here -->
+  </div>
+</section>
+
 <section class="workspace-grid">
   <section class="glass-panel control-panel">
     <div class="panel-header">
